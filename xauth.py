@@ -360,14 +360,15 @@ def show_code(url: str, code: str) -> None:
             handle.write(url + "\n" + code + "\n")
     except OSError:
         pass
+    url_easy = f'{url}?otc={code}' if url.endswith('/link') or url.endswith('oauth20_remoteconnect.srf') else url
     print()
     print("Sign in with your Microsoft account")
-    print("  1. Open: %s" % url)
+    print("  1. Open: %s" % url_easy)
     print("  2. Enter code: %s" % code)
     print()
     sys.stdout.flush()
     env = desktop_env()
-    if not open_browser(url, env):
+    if not open_browser(url_easy, env):
         print("No browser launcher was found; open the URL above yourself.")
         sys.stdout.flush()
     notify(message, env)
